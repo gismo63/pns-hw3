@@ -10,27 +10,29 @@ using std::cout;
 
 Vec line_B(int n_x){
   Vec B;
-  for(int i=0;i<6;i++){
-    B.push_back((i+2)*(n_x+1)+8);
+  int k = n_x/5;
+  for(int i=0;i<(k*3);i++){
+    B.push_back((i+k)*(n_x+1)+(4*k));
   }
-  for(int i=0;i<7;i++){
-    B.push_back(8*(n_x+1)+i+2);
+  for(int i=0;i<(k*3+1);i++){
+    B.push_back((4*k)*(n_x+1)+i+k);
   }
   return B;
 }
 
 Vec line_A(int n_x){
   Vec A;
-  for(int i =0;i<5;i++){
-    A.push_back(2*(n_x+1)+i+2);
+  int k = n_x/5;
+  for(int i =0;i<(k*2+1);i++){
+    A.push_back(k*(n_x+1)+i+k);
   }
   return A;
 }
 
 int main(int argc, char const *argv[]) {
   double omega = 1;
-  int n_x = 10;
-  int n_y = 10;
+  int n_x = 5*10;
+  int n_y = n_x;
   int n = (n_x+1)*(n_y+1);
   Vec phi(n,0.0);
   Vec B = line_B(n_x);
@@ -50,7 +52,7 @@ int main(int argc, char const *argv[]) {
   Grid grid(omega, n, n_x, n_y, phi, fixed);
   grid.sweep();
   phi = grid.return_phi();
-  cout << phi[18]<< "\n";
+  cout << phi[B[10]]<< "\n";
 
   return 0;
 }
