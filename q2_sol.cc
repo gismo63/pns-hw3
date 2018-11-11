@@ -6,7 +6,7 @@
 typedef std::vector<double> Vec;
 using std::cout;
 
-#include "grid.h"
+#include "grid2.h"
 
 Vec line_B(int n_x){
   Vec B;
@@ -30,7 +30,7 @@ Vec line_A(int n_x){
 }
 
 int main(int argc, char const *argv[]) {
-  int n_x = 10*10;
+  int n_x = 10*40;
   int n_y = n_x;
   int n = (n_x+1)*(n_y+1);
   double omega = 2/(1+M_PI/n_x);

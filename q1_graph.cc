@@ -30,7 +30,7 @@ Vec line_A(int n_x){
 }
 
 int main(int argc, char const *argv[]) {
-  int n_x = 10*10;
+  int n_x = 10*5;
   int n_y = n_x;
   int n = (n_x+1)*(n_y+1);
   double omega = 2/(1+M_PI/n_x);
@@ -52,9 +52,11 @@ int main(int argc, char const *argv[]) {
   Grid grid(omega, n, n_x, n_y, phi, fixed);
   grid.solve();
   phi = grid.return_phi();
-  double slope = grid.x_slope(0.2,0.5);
-  cout << phi[B[0]-5*(n_x+1)]<< "\n";
-  cout << slope << '\n';
+  for(int i = 0;i<(n_y+1);i++){
+    for(int j = 0;j<(n_x+1);j++){
+      cout << double(j)/n_x << ' ' << double(i)/n_y << ' ' << phi[i*(n_x+1)+j] << "\n";
+    }
+  }
 
   return 0;
 }

@@ -40,12 +40,26 @@ Grid::Grid(double omega_,int n_,int n_x_, int n_y_, const Vec& phi_i, const Vec&
 double Grid::sweep(){
   double diff = 0;
   double old;
-  for(int i = 1;i<n_x;i++){
-    for(int j = 1;j<n_y;j++){
-      if(!std::binary_search(fixed_vals.begin(),fixed_vals.end(),(i*(n_x+1)+j))){
-        old = phi[i*(n_x+1)+j];
-        phi[i*(n_x+1)+j] = gauss_seidel(i*(n_x+1)+j);
-        diff += fabs(old-phi[i*(n_x+1)+j]);
+  for(int i = 0;i<(n_x+1);i++){
+    for(int j = 0;j<(n_y+1);j++){
+      if(j==0){
+        phi[i*(n_x+1)+j] = (4*phi[i*(n_x+1)+j+1]-phi[i*(n_x+1)+j+2])/3;
+      }
+      else if(j==n_x){
+        phi[i*(n_x+1)+j] = (4*phi[i*(n_x+1)+j-1]-phi[i*(n_x+1)+j-2])/3;
+      }
+      else if(i==0){
+        phi[i*(n_x+1)+j] = (4*phi[(i+1)*(n_x+1)+j]-phi[(i+2)*(n_x+1)+j])/3;
+      }
+      else if(i==n_y){
+        phi[i*(n_x+1)+j] = (4*phi[(i-1)*(n_x+1)+j]-phi[(i-2)*(n_x+1)+j])/3;
+      }
+      else{
+        if(!std::binary_search(fixed_vals.begin(),fixed_vals.end(),(i*(n_x+1)+j))){
+          old = phi[i*(n_x+1)+j];
+          phi[i*(n_x+1)+j] = gauss_seidel(i*(n_x+1)+j);
+          diff += fabs(old-phi[i*(n_x+1)+j]);
+        }
       }
     }
   }
